@@ -99,17 +99,12 @@ void tarea_led( void* taskParmPtr )
     {
         dif = get_diff( index );
 
-        if (dif != KEYS_INVALID_TIME)
+        if (dif != KEYS_INVALID_TIME && dif != 0)
         {
-            if (dif > LED_RATE)
+            gpioWrite(leds_t[index], ON);
+            gpioWrite(gpio_t[index], ON);
+            if (dif < LED_RATE)
             {
-                gpioWrite(leds_t[index], ON);
-                gpioWrite(gpio_t[index], ON);
-            }
-            else
-            {
-                gpioWrite(leds_t[index], ON);
-                gpioWrite(gpio_t[index], ON);
                 vTaskDelay(dif);
                 gpioWrite(leds_t[index], OFF);
                 gpioWrite(gpio_t[index], OFF);
